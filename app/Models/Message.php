@@ -14,8 +14,8 @@ class Message extends Model
         'img_msg',
         'file_msg',
         'file_3d_msg',
-        'sender_id',
-        'recepient_id',
+        'user_id_sender',
+        'user_id_recepient',
         'chat_id',
         'created_at'
     ];

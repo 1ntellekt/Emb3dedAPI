@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Device;
+use App\Models\Message;
+use App\Observers\DeviceObserver;
+use App\Observers\MessageObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -27,7 +31,9 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        parent::boot();
+        Device::observe(DeviceObserver::class);
+        Message::observe(MessageObserver::class);
     }
 
     /**

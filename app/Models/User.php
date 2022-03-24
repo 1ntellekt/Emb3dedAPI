@@ -50,10 +50,6 @@ class User extends Authenticatable
     // ];
 
 
-    public function devices(){
-        return $this->hasMany(Device::class);
-    }
-
     public function orders(){
         return $this->hasMany(Order::class);
     }
@@ -62,17 +58,21 @@ class User extends Authenticatable
         return $this->hasMany(News_item::class);
     }
 
-    // public function routeNotificationForFcm()
-    // {
-    //     return $this->getDeviceTokens();
-    // }
+    public function devices(){
+        return $this->hasMany(Device::class);
+    }
+
+    public function routeNotificationForFcm()
+    {
+        return $this->getDeviceTokens();
+    }
 
     public function getDeviceTokens(){
-        $query = Device::where('user_id',$this->id)->get('device_token');
+        $query = Device::where('user_id',$this->id)->get('token');
         $deviceTokens  = array();
 
         foreach($query as $it){
-            array_push($deviceTokens, $it['device_token']);
+            array_push($deviceTokens, $it['token']);
         }
         return $deviceTokens;
     }

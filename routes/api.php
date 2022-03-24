@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\FcmController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NewsItemController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
@@ -53,9 +56,19 @@ Route::group(['middleware' => ['auth:sanctum']],function(){
     Route::put('/news/{id}',[NewsItemController::class,'update']);
     Route::delete('/news/{id}',[NewsItemController::class,'destroy']);
 
-        // //Push notification send user by id
-    // Route::post('/sendPushNotification', [FcmController::class, 'sendPushNotification']);
-    // Route::post('/sendPushAll', [FcmController::class, 'sendPushNotificationAllDevices']);
+    //chats
+    Route::get('/chats',[ChatController::class,'index']);
+    Route::get('/chats/{id}',[ChatController::class,'show']);
+    Route::post('/chats',[ChatController::class,'store']);
+
+    //messages
+    Route::post('/messages',[MessageController::class,'store']);
+    Route::put('/messages/{id}',[MessageController::class,'update']);
+    Route::delete('/messages/{id}',[MessageController::class,'destroy']);
+
+    //Push notification send user by id
+     Route::post('/sendPushNotification', [FcmController::class, 'sendPushNotification']);
+     Route::post('/sendPushAll', [FcmController::class, 'sendPushNotificationAllDevices']);
 });
 
 Route::post('/register', [UserController::class,'register']);

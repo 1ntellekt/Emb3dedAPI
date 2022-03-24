@@ -12,12 +12,16 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $request -> validate([
+            'user_id' => 'required'
+        ]);
+
         return response([
             'status' => true,
             'message' => 'Get all orders success!',
-            'orders' => Order::with('user')->get()
+            'orders' => Order::with('user')->where('user_id',$request->user_id)->get()
         ],200);
     }
 

@@ -19,6 +19,9 @@ return new class extends Migration
             $table->boolean('download_second')->default(false);
             $table->foreignId('user_id_first')->constrained()->onDelete('cascade');
             $table->foreignId('user_id_second')->constrained()->onDelete('cascade');
+
+            $table->unique(['user_id_first', 'user_id_second']);
+
             //$table->foreign('user_first')->references('id')->on('users')->onDelete('cascade');
             //$table->foreign('user_second')->references('id')->on('users')->onDelete('cascade');
            // $table->timestamps();

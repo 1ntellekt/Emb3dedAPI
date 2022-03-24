@@ -12,12 +12,17 @@ class NewsItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+
+        $request -> validate([
+            'user_id' => 'required'
+        ]);
+
         return response([
             'status' => true,
             'message' => 'Get all news success!',
-            'news' => News_item::with('user')->get()
+            'news' => News_item::with('user')->where('user_id',$request->user_id)->get()
         ],200);
     }
 
@@ -90,7 +95,7 @@ class NewsItemController extends Controller
             'title' => 'sometimes|required|string',
             'description' => 'sometimes|required|string',
             'user_id' => 'sometimes|required',
-            'img_url' => 'sometimes|required',
+            'img_url' => 'sometimes|required|string',
             'tag' => 'sometimes|required|string'
         ]);
 

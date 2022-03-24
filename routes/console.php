@@ -17,3 +17,13 @@ use Illuminate\Support\Facades\Artisan;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
+
+Artisan::command('sendpush:user {id} {title} {body}', function ($id, $title, $body){
+    $myRequest = new \Illuminate\Http\Request();
+    $myRequest->setMethod('POST');
+    $myRequest->request->add(
+     ['user_id' => $id,
+     'title' => $title,
+     'body' => $body,]);
+    app(FcmController::class)->sendPushNotification($myRequest);
+});
