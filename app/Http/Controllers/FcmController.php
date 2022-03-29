@@ -34,19 +34,9 @@ class FcmController extends Controller
         $data=['key'=>'value'];
 
       if ($request->has('data_field')) {
-            $data1 = json_decode($request->data_field,true);
-            $data=[
-            'id' => $data1['id'],
-            'text_msg' => $data1['text_msg'],
-            'img_msg' => $data1['img_msg'],
-            'file_msg' => $data1['file_msg'],
-            'file_3d_msg' => $data1['file_3d_msg'],
-            'user_id_sender' => $data1['user_id_sender'],
-            'user_id_recepient' => $data1['user_id_recepient'],
-            'chat_id' => $data1['chat_id'],
-            ];
+            $data = json_decode($request->data_field,true);
             //$data = $request->data;
-            dd($data);
+            //dd($data);
         }
 
         //dd($data);
@@ -64,15 +54,52 @@ class FcmController extends Controller
            ],200);
         }
 
-        //dd($query);
-        //dd(new FcmNotification($field['title'],$field['body'],$data));
 
-        User::find($field['user_id'])->notify(new FcmNotification($field['title'],$field['body'],$data));
+        $deviceTokens  = array();
+
+        foreach($query as $it){
+            array_push($deviceTokens, $it['token']);
+        }
+    
+        $messaging = app('firebase.messaging');
+
+        $notification = FcmNotif::create($field['title'],$field['body']);
+
+        // $data  = [
+        //     'key' => 'value',
+        // ];
+
+        $message = CloudMessage::new();
+        $message = $message->withNotification($notification);
+        $message = $message->withData($data);
+
+            try {
+                
+              $rep = $messaging->sendMulticast($message, $deviceTokens);
 
                 return response([
                     'status' => true,
                     'message' => 'Send message success!',
+                    'report-success' => $rep->successes()->count(),
+                    'report-fail' => $rep->failures()->count(),
                 ],200);
+
+            } catch(Exception $e) {
+                 return response([
+                     'status' => false,
+                     'message' => 'Error send message from server!'
+                 ],200);
+            }
+
+        //dd($query);
+        //dd(new FcmNotification($field['title'],$field['body'],$data));
+
+        //User::find($field['user_id'])->notify(new FcmNotification($field['title'],$field['body'],$data));
+
+                // return response([
+                //     'status' => true,
+                //     'message' => 'Send message success!',
+                // ],200);
     }
 
     public function sendPushNotificationAllDevices(Request $request)
