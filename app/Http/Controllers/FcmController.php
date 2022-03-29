@@ -34,9 +34,19 @@ class FcmController extends Controller
         $data=['key'=>'value'];
 
       if ($request->has('data_field')) {
-            $data = json_decode($request->data,true);
+            $data1 = json_decode($request->data_field,true);
+            $data=[
+            'id' => $data1['id'],
+            'text_msg' => $data1['text_msg'],
+            'img_msg' => $data1['img_msg'],
+            'file_msg' => $data1['file_msg'],
+            'file_3d_msg' => $data1['file_3d_msg'],
+            'user_id_sender' => $data1['user_id_sender'],
+            'user_id_recepient' => $data1['user_id_recepient'],
+            'chat_id' => $data1['chat_id'],
+            ];
             //$data = $request->data;
-            //dd($data);
+            dd($data);
         }
 
         //dd($data);
