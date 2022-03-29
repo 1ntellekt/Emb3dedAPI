@@ -50,12 +50,12 @@ class FcmNotification extends Notification
                 ->setTitle($this->title)
                 ->setBody($this->body)
                 //->setImage('https://picsum.photos/200')
-                )
-            ->setAndroid(
-                AndroidConfig::create()
-                    ->setFcmOptions(AndroidFcmOptions::create()->setAnalyticsLabel('analytics'))
-                    ->setNotification(AndroidNotification::create()->setColor('#0A0A0A'))
-            );
+    );
+            // ->setAndroid(
+            //     AndroidConfig::create()
+            //         ->setFcmOptions(AndroidFcmOptions::create()->setAnalyticsLabel('analytics'))
+            //         ->setNotification(AndroidNotification::create()->setColor('#0A0A0A'))
+            // );
     }
 
 }

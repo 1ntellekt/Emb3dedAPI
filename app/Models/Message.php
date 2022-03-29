@@ -29,4 +29,12 @@ class Message extends Model
         return $this->belongsTo(Chat::class);
     }
 
+    public function recepient(){
+        return $this->belongsTo(User::class, 'user_id_recepient', 'id');
+    }
+
+    public function sender(){
+        return $this->belongsTo(User::class, 'user_id_sender', 'id');
+    }
+
 }

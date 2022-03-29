@@ -43,11 +43,11 @@ class DeviceObserver
     public function deleted(Device $device)
     {
         $messaging = app('firebase.messaging');
-        $data = [];
+        //$data = [];
         $notification = Notification::create('Title delete','Body delete device');
         $message = CloudMessage::withTarget('token', $device->device_token)
-        ->withNotification($notification) // optional
-        ->withData($data); // optional
+        ->withNotification($notification); // optional
+        //->withData($data); // optional
         $messaging->send($message);
     }
 

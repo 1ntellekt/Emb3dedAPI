@@ -19,11 +19,31 @@ class FcmController extends Controller
     function sendPushNotification(Request $request)
     {
 
+        //dd($request->all());
+
         $field = $request->validate([
             'user_id' => 'required',
             'title' => 'required',
             'body' => 'required',
         ]);
+
+        //dd($request);
+
+        //dd($request->data);
+
+        $data=['key'=>'value'];
+
+      if ($request->has('data_field')) {
+            $data = json_decode($request->data,true);
+            //$data = $request->data;
+            //dd($data);
+        }
+
+        //dd($data);
+
+        //dd($request);
+
+        //$data = ['data1' => 'value', 'data2' => 'value2'];
 
         $query = Device::where('user_id',$field['user_id'])->get('token');
 
@@ -34,7 +54,8 @@ class FcmController extends Controller
            ],200);
         }
 
-        $data = ['data1' => 'value', 'data2' => 'value2'];
+        //dd($query);
+        //dd(new FcmNotification($field['title'],$field['body'],$data));
 
         User::find($field['user_id'])->notify(new FcmNotification($field['title'],$field['body'],$data));
 
@@ -46,7 +67,6 @@ class FcmController extends Controller
 
     public function sendPushNotificationAllDevices(Request $request)
     {
-
         $field = $request->validate([
             'title' => 'required',
             'body' => 'required',
@@ -71,13 +91,13 @@ class FcmController extends Controller
 
         $notification = FcmNotif::create($field['title'],$field['body']);
 
-        $data  = [
-            'key' => 'value',
-        ];
+        // $data  = [
+        //     'key' => 'value',
+        // ];
 
         $message = CloudMessage::new();
         $message = $message->withNotification($notification);
-        $message = $message->withData($data);
+        //$message = $message->withData($data);
 
             try {
                 

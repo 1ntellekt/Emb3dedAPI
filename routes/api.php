@@ -66,6 +66,10 @@ Route::group(['middleware' => ['auth:sanctum']],function(){
     Route::put('/messages/{id}',[MessageController::class,'update']);
     Route::delete('/messages/{id}',[MessageController::class,'destroy']);
 
+    //filter-funs
+    Route::get('/filter/news',[NewsItemController::class,'filtering']);
+    Route::get('/filter/orders', [OrderController::class, 'filtering']);
+
     //Push notification send user by id
      Route::post('/sendPushNotification', [FcmController::class, 'sendPushNotification']);
      Route::post('/sendPushAll', [FcmController::class, 'sendPushNotificationAllDevices']);

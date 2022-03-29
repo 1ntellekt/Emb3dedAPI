@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -128,4 +129,48 @@ class OrderController extends Controller
             'message' => 'Order delete success!'
         ], 200);
     }
+
+    public function filtering(Request $request)
+    {
+        $data = $request->all();
+       // $filter = app()->make(ItemFilter::class,array_filter($data));
+        //$items = Item::filter($filter)->get();
+        $query = Order::query();
+        $res = Order::with('user')->get();
+
+        if (isset($data['title'])) {
+            $query->where('title', 'like', "%{$data['title']}%");
+            $res = $query->with('user')->get();
+        } 
+        elseif(isset($data['author'])){
+            $users = User::where('login','like', "%{$data['author']}%")->get('id');
+            $arr = array();
+            foreach($users as $it) {
+                    array_push($arr,$it['id']);
+            }
+
+            $res = $query->whereIn('user_id', $arr)->with('user')->get();
+        }
+
+        // if (isset($data['tag']) && isset($data['title'])) {
+        //     $query->where('tag', 'like', "%{$data['tag']}%")->orWhere('title', 'like', "%{$data['title']}%");
+        // }
+
+        // if (isset($data['title'])) {
+        //    $query->where('title', 'like', "%{$data['title']}%");
+        // }
+
+        // if (isset($data['tag'])) {
+        //     $query->where('tag', 'like', "%{$data['tag']}%");
+        // }
+
+        // if (isset($data['cost'])) {
+        //    $query->where('cost', '>=', $data['cost']);
+        // }
+
+        return response([
+            'orders' => $res
+        ],200);
+    }
+
 }

@@ -130,4 +130,39 @@ class NewsItemController extends Controller
             'message' => 'News item delete success!'
         ], 200);
     }
+
+    public function filtering(Request $request){
+        $data = $request->all();
+
+       // $filter = app()->make(ItemFilter::class,array_filter($data));
+        //$items = Item::filter($filter)->get();
+
+        $query = News_item::query();
+
+        if (isset($data['txt'])) {
+            $query->where('tag', 'like', "%{$data['txt']}%")->orWhere('title', 'like', "%{$data['txt']}%");
+        }
+
+        // if (isset($data['tag']) && isset($data['title'])) {
+        //     $query->where('tag', 'like', "%{$data['tag']}%")->orWhere('title', 'like', "%{$data['title']}%");
+        // }
+
+        // if (isset($data['title'])) {
+        //    $query->where('title', 'like', "%{$data['title']}%");
+        // }
+
+        // if (isset($data['tag'])) {
+        //     $query->where('tag', 'like', "%{$data['tag']}%");
+        // }
+
+        // if (isset($data['cost'])) {
+        //    $query->where('cost', '>=', $data['cost']);
+        // }
+
+        return response([
+            'news' => $query->with(['user'])->get()
+        ],200);
+    }
+
+
 }
