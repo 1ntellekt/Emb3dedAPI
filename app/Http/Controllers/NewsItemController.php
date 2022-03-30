@@ -47,7 +47,7 @@ class NewsItemController extends Controller
         return response([
             'status' => true,
             'message' => 'News item add successful',
-            'news_item' => $news_item
+            'news_item' => News_item::with('user')->find($news_item->id)
         ],201);
     }
 

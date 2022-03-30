@@ -46,7 +46,7 @@ class OrderController extends Controller
         return response([
             'status' => true,
             'message' => 'order add successful',
-            'order' => $order
+            'order' => Order::with('user')->find($order->id)
         ],201);
 
     }

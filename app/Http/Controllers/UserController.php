@@ -102,7 +102,7 @@ class UserController extends Controller
         $res = [
             'status' => true,
             'message' =>'Register success!',
-            'user' => $user,
+            'user' => User::find($user->id),
             'token' => $token
         ];
 
@@ -129,7 +129,7 @@ class UserController extends Controller
         $res = [
             'status' => true,
             'message' => 'Login success!',
-            'user' => $user,
+            'user' => User::find($user->id),
             'token' => $token
         ];
 
