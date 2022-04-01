@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Chat;
 use App\Models\Device;
 use App\Models\Message;
+use App\Observers\ChatObserver;
 use App\Observers\DeviceObserver;
 use App\Observers\MessageObserver;
 use Illuminate\Auth\Events\Registered;
@@ -34,6 +36,7 @@ class EventServiceProvider extends ServiceProvider
         parent::boot();
         Device::observe(DeviceObserver::class);
         Message::observe(MessageObserver::class);
+        Chat::observe(ChatObserver::class);
     }
 
     /**

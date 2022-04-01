@@ -40,7 +40,7 @@ class MessageController extends Controller
         return response([
             'status' => true,
             'message' => 'Message add successful',
-            'message_created' => $message
+            'message_created' => Message::find($message->id)
         ],201);
 
     }

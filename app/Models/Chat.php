@@ -17,8 +17,8 @@ class Chat extends Model
     ];
 
     protected $hidden = [
-        'user_id_first',
-        'user_id_second',
+        // 'user_id_first',
+        // 'user_id_second',
     ];
 
     public $timestamps = false;

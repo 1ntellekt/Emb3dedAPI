@@ -27,6 +27,9 @@ Route::group(['middleware' => ['auth:sanctum']],function(){
     //logout user from token
     Route::post('/logout', [UserController::class, 'logout']);
 
+    //reset password
+    Route::put('/reset',[UserController::class,'resetPassword']);
+
     //users
     Route::put('/users/{id}',[UserController::class, 'update']);
     Route::get('/users/{id}',[UserController::class, 'show']);
@@ -59,6 +62,7 @@ Route::group(['middleware' => ['auth:sanctum']],function(){
     //chats
     Route::get('/chats',[ChatController::class,'index']);
     Route::get('/chats/{id}',[ChatController::class,'show']);
+    Route::put('/chats/{id}',[ChatController::class,'update']);
     Route::post('/chats',[ChatController::class,'store']);
 
     //messages

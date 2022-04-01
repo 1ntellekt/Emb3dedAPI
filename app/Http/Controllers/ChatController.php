@@ -63,7 +63,7 @@ class ChatController extends Controller
        return response([
         'status' => true,
         'message' => 'Chat created success!',
-        'chat' => Chat::with(['user_first','user_second'])->find($chat->id),
+        'chat' => Chat::with(['user_first','user_second','last_message'])->find($chat->id),
         ],201);
 
     }
@@ -87,21 +87,40 @@ class ChatController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Chat found success!', 
-            'chat' => Chat::with('messages')->find($id)
+            'chat' => Chat::find($id),
+            'messages' => Chat::find($id)->messages,
         ], 200);
     }
 
-    // /**
-    //  * Update the specified resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function update(Request $request, $id)
-    // {
-    //     //
-    // }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+     public function update(Request $request, $id)
+    {
+        $item = Chat::find($id);
+        if(is_null($item)){
+            return response([
+                'status' => false,
+                'message' => 'Chat not found!'
+            ],404);
+        }
+
+        $request->validate([
+            'download_first' => 'sometimes|required',
+            'download_second' => 'sometimes|required',
+        ]);
+
+        $item->update($request->all());
+        
+        return response()->json([
+            'status' => true,
+            'message' => 'Chat update success!'
+        ], 200);
+    }
 
     // /**
     //  * Remove the specified resource from storage.

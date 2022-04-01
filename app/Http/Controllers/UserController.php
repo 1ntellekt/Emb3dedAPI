@@ -65,10 +65,28 @@ class UserController extends Controller
         $request->validate([
             'email' => 'sometimes|required|string|unique:users,email',
             'login' => 'sometimes|required|string',
+            'old_password' => 'sometimes|required|string|min:8',
             'password' => 'sometimes|required|string|min:8',
             'number' => 'sometimes|required|string',
             'uid' => 'sometimes|required|string',
         ]);
+
+        if($request->has('old_password')&& !$request->has('password') || !$request->has('old_password')&& $request->has('password')){
+            return response()->json([
+                'status' => false,
+                'message' => 'Password reset fail!'
+            ], 401);
+        } elseif($request->has('password')&& $request->has('old_password')){
+            if(!Hash::check($request->old_password, $item->password)){
+                //dd(Hash::check($request->old_password, $item->password));
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Password reset fail(old password is fail)!'
+                ], 401);
+            }else {
+                $request->merge(['password' => bcrypt($request->password)]);
+            }
+        }
 
         $item->update($request->all());
 
@@ -76,6 +94,26 @@ class UserController extends Controller
             'status' => true,
             'message' => 'User update success!'
         ], 200);
+    }
+
+    public function resetPassword(Request $request) {
+
+         $request->validate([
+            'uid' => 'required|string',
+            'reset_password' => 'required|string|min:8',
+         ]);
+
+         $user = User::where('uid', $request->uid)->first();
+
+         $request->merge(['password' => bcrypt($request->reset_password)]);
+
+         $user->update($request->all());
+
+         return response()->json([
+            'status' => true,
+            'message' => 'User update success!'
+        ], 200);
+
     }
 
     public function register(Request $request)
