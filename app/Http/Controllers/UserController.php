@@ -183,7 +183,7 @@ class UserController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Successfully logged out'
-        ]);
+        ],200);
 
     }
 
