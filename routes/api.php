@@ -8,6 +8,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NewsItemController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,9 +27,6 @@ Route::group(['middleware' => ['auth:sanctum']],function(){
 
     //logout user from token
     Route::post('/logout', [UserController::class, 'logout']);
-
-    //reset password
-    Route::put('/reset',[UserController::class,'resetPassword']);
 
     //users
     Route::put('/users/{id}',[UserController::class, 'update']);
@@ -74,6 +72,10 @@ Route::group(['middleware' => ['auth:sanctum']],function(){
     Route::get('/filter/news',[NewsItemController::class,'filtering']);
     Route::get('/filter/orders', [OrderController::class, 'filtering']);
 
+    //all
+    Route::get('/all/news',[NewsItemController::class,'all']);
+    Route::get('/all/orders', [OrderController::class, 'all']);
+
     //Push notification send user by id
      Route::post('/sendPushNotification', [FcmController::class, 'sendPushNotification']);
      Route::post('/sendPushAll', [FcmController::class, 'sendPushNotificationAllDevices']);
@@ -81,3 +83,5 @@ Route::group(['middleware' => ['auth:sanctum']],function(){
 
 Route::post('/register', [UserController::class,'register']);
 Route::post('/login',[UserController::class, 'login'])->name('login');
+//reset password
+Route::put('/reset',[UserController::class,'resetPassword']);

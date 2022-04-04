@@ -26,6 +26,14 @@ class OrderController extends Controller
         ],200);
     }
 
+    public function all(){
+        return response([
+            'status' => true,
+            'message' => 'Get all orders success!',
+            'orders' => Order::with('user')->where('status',0)->get()
+        ],200);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

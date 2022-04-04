@@ -26,6 +26,14 @@ class NewsItemController extends Controller
         ],200);
     }
 
+    public function all(){
+        return response([
+            'status' => true,
+            'message' => 'Get all news success!',
+            'news' => News_item::with('user')->get()
+        ],200);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
