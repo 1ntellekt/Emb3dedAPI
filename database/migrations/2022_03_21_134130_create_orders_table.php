@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('description');
+            $table->longText('description');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('img_url')->nullable()->default(null);
             $table->integer('status')->default(0);
