@@ -19,6 +19,7 @@ class MessageObserver
         $myRequest->setMethod('POST');
 
         $data = [
+            'action' => 'show_message',
             'id' => $message->id,
             'text_msg' => $message->text_msg,
             'img_msg' => $message->img_msg,

@@ -15,7 +15,19 @@ class ChatObserver
      */
     public function created(Chat $chat)
     {
-        
+        $data = [
+            'action' => 'chat_holder',
+        ];
+
+        $myRequest = new \Illuminate\Http\Request();
+        $myRequest->setMethod('POST');
+        $myRequest->request->add(['user_id' => $chat->user_id_first,'data_field' => json_encode($data),]);
+        app(FcmController::class)->sendPushNotificationOnlyData($myRequest);
+
+        $myRequest2 = new \Illuminate\Http\Request();
+        $myRequest2->setMethod('POST');
+        $myRequest2->request->add(['user_id' => $chat->user_id_second,'data_field' => json_encode($data),]);
+        app(FcmController::class)->sendPushNotificationOnlyData($myRequest2);
     }
 
     /**
@@ -27,31 +39,22 @@ class ChatObserver
     public function updated(Chat $chat)
     {
 
-        if($chat->download_first == true){
-            $myRequest = new \Illuminate\Http\Request();
-            $myRequest->setMethod('POST');
-            $myRequest->request->add(['user_id' => $chat->user_id_first,'title' => 'Aceess download','body' => $chat->user_first->login.' get access to download on chat',]);
-            app(FcmController::class)->sendPushNotification($myRequest);
-        } else {
-            $myRequest = new \Illuminate\Http\Request();
-            $myRequest->setMethod('POST');
-            $myRequest->request->add(['user_id' => $chat->user_id_first,'title' => 'Close download','body' => $chat->user_first->login.' close access to download on chat',]);
-            app(FcmController::class)->sendPushNotification($myRequest);
-        }
+        $data = [
+            'action' => 'chat_holder',
+            'id' => $chat->id,
+            'download_first' => $chat->download_first,
+            'download_second' => $chat->download_second,
+        ];
 
+        $myRequest = new \Illuminate\Http\Request();
+        $myRequest->setMethod('POST');
+        $myRequest->request->add(['user_id' => $chat->user_id_first,'data_field' => json_encode($data),]);
+        app(FcmController::class)->sendPushNotificationOnlyData($myRequest);
 
-
-        if($chat->download_second == true){
-            $myRequest = new \Illuminate\Http\Request();
-            $myRequest->setMethod('POST');
-            $myRequest->request->add(['user_id' => $chat->user_id_second,'title' => 'Aceess download','body' => $chat->user_second->login.' get access to download on chat',]);
-            app(FcmController::class)->sendPushNotification($myRequest);
-        } else {
-            $myRequest = new \Illuminate\Http\Request();
-            $myRequest->setMethod('POST');
-            $myRequest->request->add(['user_id' => $chat->user_id_second,'title' => 'Close download','body' => $chat->user_second->login.' close access to download on chat',]);
-            app(FcmController::class)->sendPushNotification($myRequest);
-        }
+        $myRequest2 = new \Illuminate\Http\Request();
+        $myRequest2->setMethod('POST');
+        $myRequest2->request->add(['user_id' => $chat->user_id_second,'data_field' => json_encode($data),]);
+        app(FcmController::class)->sendPushNotificationOnlyData($myRequest2);
     }
 
     /**
@@ -62,7 +65,19 @@ class ChatObserver
      */
     public function deleted(Chat $chat)
     {
-        //
+        $data = [
+            'action' => 'chat_holder',
+        ];
+
+        $myRequest = new \Illuminate\Http\Request();
+        $myRequest->setMethod('POST');
+        $myRequest->request->add(['user_id' => $chat->user_id_first,'data_field' => json_encode($data),]);
+        app(FcmController::class)->sendPushNotificationOnlyData($myRequest);
+
+        $myRequest2 = new \Illuminate\Http\Request();
+        $myRequest2->setMethod('POST');
+        $myRequest2->request->add(['user_id' => $chat->user_id_second,'data_field' => json_encode($data),]);
+        app(FcmController::class)->sendPushNotificationOnlyData($myRequest2);
     }
 
     /**
