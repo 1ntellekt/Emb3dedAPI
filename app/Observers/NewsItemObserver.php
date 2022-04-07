@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Http\Controllers\FcmController;
 use App\Models\News_item;
 
 class NewsItemObserver

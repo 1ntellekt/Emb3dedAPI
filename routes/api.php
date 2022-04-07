@@ -37,6 +37,8 @@ Route::group(['middleware' => ['auth:sanctum']],function(){
     Route::post('/putfile', [FileController::class,'uploadFile']);
     //Get file to download
     Route::get('/getfile', [FileController::class,'getDownloadFile']);
+    //Get file content
+    Route::get('/getContent',[FileController::class, 'getContentFile']);
     
     //devices
     Route::get('/devices', [DeviceController::class, 'index']);
