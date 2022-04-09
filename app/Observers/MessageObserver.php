@@ -37,19 +37,16 @@ class MessageObserver
 
         if(!is_null($message->text_msg)){
             $myRequest->request->add(['user_id' => $message->user_id_recepient,'title' => 'Send message by '.$message->sender->login,'body' => $message->text_msg,'data_field' => json_encode($data) ]);
-            $myRequest2->request->add(['user_id' => $message->user_id_sender,'title' => 'Send message by '.$message->sender->login,'body' => $message->text_msg,'data_field' => json_encode($data) ]);
         } elseif(!is_null($message->img_msg)) {
             $myRequest->request->add(['user_id' => $message->user_id_recepient,'title' => 'Send message by '.$message->sender->login,'body' => 'Send image message','data_field' => json_encode($data),]);
-            $myRequest2->request->add(['user_id' => $message->user_id_sender,'title' => 'Send message by '.$message->sender->login,'body' => 'Send image message','data_field' => json_encode($data),]);
         } elseif(!is_null($message->file_msg)) {
             $myRequest->request->add(['user_id' => $message->user_id_recepient,'title' => 'Send message by '.$message->sender->login,'body' => 'Send file message','data_field' => json_encode($data),]);
-            $myRequest2->request->add(['user_id' => $message->user_id_sender,'title' => 'Send message by '.$message->sender->login,'body' => 'Send file message','data_field' => json_encode($data),]);
         } elseif(!is_null($message->file_3d_msg)) {
             $myRequest->request->add(['user_id' => $message->user_id_recepient,'title' => 'Send message by '.$message->sender->login,'body' => 'Send file 3d message','data_field' => json_encode($data),]);
-            $myRequest2->request->add(['user_id' => $message->user_id_sender,'title' => 'Send message by '.$message->sender->login,'body' => 'Send file 3d message','data_field' => json_encode($data),]);
         }
+        $myRequest2->request->add(['user_id' => $message->user_id_sender,'data_field' => json_encode($data)]);
         app(FcmController::class)->sendPushNotification($myRequest);
-        app(FcmController::class)->sendPushNotification($myRequest2);
+        app(FcmController::class)->sendPushNotificationOnlyData($myRequest2);
     }
 
     /**
