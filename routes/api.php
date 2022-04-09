@@ -35,10 +35,6 @@ Route::group(['middleware' => ['auth:sanctum']],function(){
 
     //Put file to upload
     Route::post('/putfile', [FileController::class,'uploadFile']);
-    //Get file to download
-    Route::get('/getfile', [FileController::class,'getDownloadFile']);
-    //Get file content
-    Route::get('/getContent',[FileController::class, 'getContentFile']);
     
     //devices
     Route::get('/devices', [DeviceController::class, 'index']);
@@ -87,3 +83,8 @@ Route::post('/register', [UserController::class,'register']);
 Route::post('/login',[UserController::class, 'login'])->name('login');
 //reset password
 Route::put('/reset',[UserController::class,'resetPassword']);
+
+//Get file to download
+Route::get('/getfile', [FileController::class,'getDownloadFile']);
+//Get file content
+Route::get('/getContent',[FileController::class, 'getContentFile']);

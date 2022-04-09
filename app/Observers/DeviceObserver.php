@@ -19,7 +19,7 @@ class DeviceObserver
     {
         $myRequest = new \Illuminate\Http\Request();
         $myRequest->setMethod('POST');
-        $myRequest->request->add(['user_id' => $device->user_id,'title' => 'Created Device','body' => 'Boby created device',]);
+        $myRequest->request->add(['user_id' => $device->user_id,'title' => 'Success auth','body' => 'Вы успешно авторизованы!',]);
         app(FcmController::class)->sendPushNotification($myRequest);
     }
 
