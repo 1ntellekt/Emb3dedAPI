@@ -135,13 +135,13 @@ class UserController extends Controller
             'uid' => $fields['uid'],
         ]);
 
-        $token = $user->createToken('token')->plainTextToken;
+        //$token = $user->createToken('token')->plainTextToken;
 
         $res = [
             'status' => true,
             'message' =>'Register success!',
             'user' => User::find($user->id),
-            'token' => $token
+            'token' => ""
         ];
 
         return response($res,201);
