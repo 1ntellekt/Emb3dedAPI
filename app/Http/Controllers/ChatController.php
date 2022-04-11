@@ -53,9 +53,10 @@ class ChatController extends Controller
        ->orWhere('user_id_first',$request->user_id_second)->where('user_id_second',$request->user_id_first)->get();
        if ($it != null && $it->count()>0) {
         return response([
-            'status' => false,
+            'status' => true,
             'message' => 'Error input (chat already created)',
-        ],400);
+            'chat' => Chat::with(['user_first','user_second','last_message'])->find($it->first()->id),
+        ],200);
        }
 
        $chat = Chat::create($request->all());
