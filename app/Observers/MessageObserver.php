@@ -23,14 +23,14 @@ class MessageObserver
 
         $data = [
             'action' => 'show_message',
-            // 'id' => $message->id,
-            // 'text_msg' => $message->text_msg,
-            // 'img_msg' => $message->img_msg,
-            // 'file_msg' => $message->file_msg,
-            // 'file_3d_msg' => $message->file_3d_msg,
-            // 'user_id_sender' => $message->user_id_sender,
-            // 'user_id_recepient' => $message->user_id_recepient,
-            // 'chat_id' => $message->chat_id,
+            'id' => $message->id,
+            'text_msg' => $message->text_msg,
+            'img_msg' => $message->img_msg,
+            'file_msg' => $message->file_msg,
+            'file_3d_msg' => $message->file_3d_msg,
+            'user_id_sender' => $message->user_id_sender,
+            'user_id_recepient' => $message->user_id_recepient,
+            'chat_id' => $message->chat_id,
         ];
 
         //dd(json_encode($data));
