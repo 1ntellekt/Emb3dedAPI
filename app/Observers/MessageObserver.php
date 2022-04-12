@@ -30,6 +30,7 @@ class MessageObserver
             'file_3d_msg' => $message->file_3d_msg,
             'user_id_sender' => $message->user_id_sender,
             'user_id_recepient' => $message->user_id_recepient,
+            'created_at' => $message->created_at,
             'chat_id' => $message->chat_id,
         ];
 
