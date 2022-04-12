@@ -147,6 +147,27 @@ class FileController extends Controller
                 'path'=>$path
             ],201);
         }
+
+        elseif($request->hasFile('profile_img')){
+            $file = $request->file('profile_img');
+
+               //$fileNow = now()->valueOf();
+
+               $path = $file->storeAs('profile_img',$file->getClientOriginalName());
+
+            if ($path == false) {
+                return response()->json([
+                'status' => false,
+                'message' => 'File is not upload!',
+                ],400);
+            }
+
+            return response()->json([
+                'status' => true,
+                'message' => 'File is uploaded!',
+                'path'=>$path
+            ],201);
+        }
     
         else {
             return response()->json([
