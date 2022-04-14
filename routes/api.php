@@ -8,6 +8,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NewsItemController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ViewerController;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -77,6 +78,7 @@ Route::group(['middleware' => ['auth:sanctum']],function(){
     //Push notification send user by id
      Route::post('/sendPushNotification', [FcmController::class, 'sendPushNotification']);
      Route::post('/sendPushAll', [FcmController::class, 'sendPushNotificationAllDevices']);
+
 });
 
 Route::post('/register', [UserController::class,'register']);
@@ -88,3 +90,6 @@ Route::put('/reset',[UserController::class,'resetPassword']);
 Route::get('/getfile', [FileController::class,'getDownloadFile']);
 //Get file content
 Route::get('/getContent',[FileController::class, 'getContentFile']);
+
+//show viewer
+Route::get('/viewer',[ViewerController::class, 'getViewer']);
