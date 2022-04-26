@@ -141,7 +141,7 @@ class UserController extends Controller
             'status' => true,
             'message' =>'Register success!',
             'user' => User::find($user->id),
-            'token' => ""
+            'token' => "None"
         ];
 
         return response($res,201);

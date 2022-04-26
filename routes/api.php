@@ -7,6 +7,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NewsItemController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\RatingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ViewerController;
 use App\Models\Order;
@@ -78,6 +79,10 @@ Route::group(['middleware' => ['auth:sanctum']],function(){
     //Push notification send user by id
      Route::post('/sendPushNotification', [FcmController::class, 'sendPushNotification']);
      Route::post('/sendPushAll', [FcmController::class, 'sendPushNotificationAllDevices']);
+
+     //rating
+     Route::get('/mark', [RatingController::class, 'getUserNewsMark']);
+     Route::post('/mark', [RatingController::class, 'store']);
 
 });
 

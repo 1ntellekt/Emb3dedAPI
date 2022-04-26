@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->string('text_msg')->nullable()->default(null);
+            $table->longText('text_msg')->nullable()->default(null);
             $table->string('img_msg')->nullable()->default(null);
             $table->string('file_msg')->nullable()->default(null);
             $table->string('file_3d_msg')->nullable()->default(null);

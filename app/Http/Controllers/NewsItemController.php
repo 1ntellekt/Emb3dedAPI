@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\News_item;
+use DB;
 use Illuminate\Http\Request;
 
 class NewsItemController extends Controller
@@ -27,10 +28,24 @@ class NewsItemController extends Controller
     }
 
     public function all(){
+        
+        $news = News_item::with('user')->get();
+        $arr = array();
+
+        foreach ($news as $news_item) {
+           $mark = DB::table('ratings')
+            ->where('news_items_id', '=', $news_item->id)
+            ->groupBy('news_items_id')
+            ->avg('mark');
+
+            $news_item['avgMark'] = $mark;
+            array_push($arr,$news_item);
+        }
+
         return response([
             'status' => true,
             'message' => 'Get all news success!',
-            'news' => News_item::with('user')->get()
+            'news' => $arr
         ],200);
     }
 
