@@ -75,7 +75,7 @@ class RatingController extends Controller
             return response([
                 'status' => false,
                 'message' => 'You yet didnt put mark!',
-                'you_mark' => null
+                'you_mark' => 0.0
             ],404);
          }
     }
