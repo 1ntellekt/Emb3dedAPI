@@ -12,10 +12,18 @@ class RatingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    // public function index()
-    // {
-        
-    // }
+    public function index(Request $request)
+    {
+        $request -> validate([
+            'news_items_id' => 'required'
+        ]);
+
+        return response([
+            'status' => true,
+            'message' => 'Get all marks success!',
+            'marks' => Rating::with('user')->where('news_items_id',$request->news_items_id)->get()
+        ],200);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -28,7 +36,8 @@ class RatingController extends Controller
         $request -> validate([
             'user_id' => 'required',
             'news_items_id' => 'required',
-            'mark' => 'required|regex:/^[0-9]+(\.[0-9][0-9]?)?$/|lt:5.01'
+            'mark' => 'required|regex:/^[0-9]+(\.[0-9][0-9]?)?$/|lt:5.01',
+            'comment' => 'sometimes|required|string',
         ]);
 
         $query = Rating::query();

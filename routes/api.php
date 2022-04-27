@@ -81,6 +81,7 @@ Route::group(['middleware' => ['auth:sanctum']],function(){
      Route::post('/sendPushAll', [FcmController::class, 'sendPushNotificationAllDevices']);
 
      //rating
+     Route::get('/marks', [RatingController::class, 'index']);
      Route::get('/mark', [RatingController::class, 'getUserNewsMark']);
      Route::post('/mark', [RatingController::class, 'store']);
 
