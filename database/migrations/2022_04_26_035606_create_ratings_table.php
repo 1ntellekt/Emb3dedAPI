@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('news_items_id')->constrained()->onDelete('cascade');
             $table->longText('comment')->nullable()->default(null);
             $table->decimal('mark',3,2);
-            $table->timestamps();
+           // $table->timestamps();
         });
     }
 
