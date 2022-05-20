@@ -38,7 +38,7 @@ class NewsItemController extends Controller
             ->groupBy('news_items_id')
             ->avg('mark');
             if(is_null($mark)){
-                $mark = 0.0;
+                $mark = 0.00;
             }
             $news_item['avgMark'] = $mark;
             array_push($arr,$news_item);
